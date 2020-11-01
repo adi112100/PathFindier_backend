@@ -87,7 +87,7 @@ def dfs_algorithm(row,col,start,end,walls):
     stk = [start]
     node = start
     while(len(stk)!=0):
-        streamnodes.append(node)
+        if node not in streamnodes: streamnodes.append(node)
         final_path.append(node)
         
         if len(final_path)>=2:
