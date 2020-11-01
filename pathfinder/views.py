@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework import status
 
 from .algorithms.djsktras import djsktras_algorithm
+from .algorithms.dfs import dfs_algorithm
 import json
 
 from .serializers import WallsSerializer
@@ -15,7 +16,8 @@ class PathfinderViewSet(viewsets.GenericViewSet):
     default_serializer_class = WallsSerializer
 
     serializer_classes = {
-		'djsktras' : WallsSerializer
+		'djsktras' : WallsSerializer,
+        'dfs' : WallsSerializer
 	}
 
     def get_serializer_class(self):
@@ -37,6 +39,25 @@ class PathfinderViewSet(viewsets.GenericViewSet):
                 {
                     'streamnodes' : streamnodes,
                     'shortest_path_val' : shortest_path_val,
+                    'shortest_path' : shortest_path
+                }
+            )
+    
+    def dfs(self, request, row, col, start, end):
+       
+        serializer = WallsSerializer(data = request.data)
+        if serializer.is_valid():
+            
+            
+            walls = json.loads(serializer.data['walls'])
+            streamnodes, shortest_path = dfs_algorithm(row, col, start, end, walls)
+            
+            streamnodes = json.dumps(streamnodes)
+            shortest_path = json.dumps(shortest_path)
+            print(shortest_path)
+            return Response(
+                {
+                    'streamnodes' : shortest_path,
                     'shortest_path' : shortest_path
                 }
             )
