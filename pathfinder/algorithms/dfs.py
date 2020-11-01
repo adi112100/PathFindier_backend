@@ -79,25 +79,29 @@ def dfs_creategraph(row, col, walls):
 
 #     return(streamnodes, final_path)
 
-def dfs_algorithm(row, col, start, end, walls):
+def dfs_algorithm(row,col,start,end,walls):
+    final_path=[]
     streamnodes=[]
-
     adj_list = dfs_creategraph(row,col,walls)
+    for index,item in enumerate(adj_list): print(index,item)
     stk = [start]
     node = start
     while(len(stk)!=0):
-        if node not in streamnodes: streamnodes.append(node)
+        streamnodes.append(node)
+        final_path.append(node)
         
+        if len(final_path)>=2:
+            while final_path[-2] not in adj_list[final_path[-1]]:
+                final_path.pop(-2)
+
         for nodes in adj_list[node]:
-            if nodes not in streamnodes: 
-                stk.append(nodes)
-                
-        
+            if nodes not in streamnodes: stk.append(nodes)
         
         node = stk.pop(-1)
         if node==end:
             streamnodes.append(node)
-            return (streamnodes, streamnodes)
+            final_path.append(node)
+            return (streamnodes, final_path)
 
 
 # print(dfs_algorithm(5,5,0,24,[6,7,8,11,12,13,17,18,23]))

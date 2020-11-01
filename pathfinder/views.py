@@ -57,7 +57,7 @@ class PathfinderViewSet(viewsets.GenericViewSet):
             print(shortest_path)
             return Response(
                 {
-                    'streamnodes' : shortest_path,
+                    'streamnodes' : streamnodes,
                     'shortest_path' : shortest_path
                 }
             )
