@@ -48,13 +48,11 @@ class PathfinderViewSet(viewsets.GenericViewSet):
         serializer = WallsSerializer(data = request.data)
         if serializer.is_valid():
             
-            
             walls = json.loads(serializer.data['walls'])
             streamnodes, shortest_path = dfs_algorithm(row, col, start, end, walls)
-            
             streamnodes = json.dumps(streamnodes)
             shortest_path = json.dumps(shortest_path)
-            print(shortest_path)
+            
             return Response(
                 {
                     'streamnodes' : streamnodes,
