@@ -85,6 +85,9 @@ def djsktras_algorithm(row, col, start, end, walls):
                         minnval = shortest_path_val[j]
                         minindex = j
                 
+                if minindex== -1:
+                    return ([streamnodes, shortest_path_val, shortest_path])
+                
                 visited_path[minindex] = 1
                 
                 for node in adjlst[minindex]:

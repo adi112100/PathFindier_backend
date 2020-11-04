@@ -92,10 +92,13 @@ def astar_algorithm(row, col, start, end, walls):
                     if visited_path[j]==0 and shortest_path_val[j] + hueristic_path_value[j] < minnval:
                         minnval = shortest_path_val[j] + hueristic_path_value[j]
                         minindex = j
-                    elif visited_path[j]==0 and shortest_path_val[j] + hueristic_path_value[j] == minnval and hueristic_path_value[j] < hueristic_path_value[minindex]:
+                    elif visited_path[j]==0 and shortest_path_val[j] + hueristic_path_value[j] == minnval and hueristic_path_value[j] < hueristic_path_value[minindex] and shortest_path_val[j] + hueristic_path_value[j] != math.inf:
                         minnval = shortest_path_val[j] + hueristic_path_value[j]
                         minindex = j
                 
+                if minindex==-1:
+                    return ([streamnodes, shortest_path_val, shortest_path])
+
                 visited_path[minindex] = 1
                 
                 for node in adjlst[minindex]:
